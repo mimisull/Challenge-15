@@ -125,8 +125,29 @@ def recommend_portfolio(intent_request):
     source = intent_request["invocationSource"]
 
     # YOUR CODE GOES HERE!
+if source == "DialogCodeHook":
+        slots = get_slots(intent_request)
+        if age is not None:
+            if parse_int(age) > 65:
+                validation_result = build_validaiton_result(False,"age","Sorry, You have to be less than 65.")
+                return elicit_slot(intent_request["sessionAttributes"],intent_request["currentIntent"]["name"],slots,validation_result["violatedSlot"],validation_result["message"])
+        if investment_amount is not None:
+            if parse_int(investment_amount)<5000:
+validation_result=build_validation_result(False,'investmentAmount','Sorry, you must invest more than $5,000')
+                return elicit_slot(intent_request['sessionAttributes'], intent_request['currentIntent']['name'], slots,validation_result["violatedSlot"],validation_result["message"])
 
-
+#If valid for both, return test values
+    return build_validation_result(True, None, None)
+    if("riskLevel"=="None"):
+        print("All bonds")
+    elif("riskLevel"=="low"):
+        print(("60% bonds and 40% equities")
+    elif("risklevel"=="medium"):
+        print("40% bonds and 60% equities")
+    elif("risklevel"=="high"):
+        print("20% bonds and 80% equities")
+    else:
+        print("Adjust risk level")
 ### Intents Dispatcher ###
 def dispatch(intent_request):
     """
